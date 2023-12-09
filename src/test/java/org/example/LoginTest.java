@@ -9,7 +9,7 @@ import org.openqa.selenium.WebElement;
 
 import java.util.stream.Stream;
 
-public class LoginTest extends ParentTest {
+public class LoginTest extends UiBaseTest {
 
   private static Stream<Arguments> testLoginWithUsernameAndPasswordInputs() {
     return Stream.of(

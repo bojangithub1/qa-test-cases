@@ -5,14 +5,15 @@ import org.junit.jupiter.api.BeforeAll;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-public class ParentTest {
+import java.util.Objects;
+
+public class UiBaseTest {
 
   protected static ChromeDriver DRIVER;
-  private static boolean isDriverInitialized = false;
 
   @BeforeAll
   static void setup() {
-    setupDriver();
+    DRIVER = setupDriver();
   }
 
   @AfterAll
@@ -20,9 +21,9 @@ public class ParentTest {
     DRIVER.quit();
   }
 
-  protected static void setupDriver() {
-    if (isDriverInitialized) {
-      return;
+  protected static ChromeDriver setupDriver() {
+    if (Objects.nonNull(DRIVER)) {
+      return DRIVER;
     }
 
     // Set chromedriver binary
@@ -36,8 +37,7 @@ public class ParentTest {
     options.setBinary(
         "chrome/mac_arm-120.0.6099.71/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing");
 
-    DRIVER = new ChromeDriver(options);
-    isDriverInitialized = true;
+    return new ChromeDriver(options);
   }
 
   protected static void getIndex() {

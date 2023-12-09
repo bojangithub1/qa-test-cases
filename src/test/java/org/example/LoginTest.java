@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.openqa.selenium.By;
 
 import java.util.stream.Stream;
 
@@ -58,9 +57,7 @@ public class LoginTest extends UiBaseTest {
 
     login();
 
-    Assertions.assertTrue(
-        DRIVER.findElement(By.cssSelector("[data-test='error']"))
-            .isDisplayed());
+    Assertions.assertTrue(findByDataTest("error").isDisplayed());
   }
 
 }

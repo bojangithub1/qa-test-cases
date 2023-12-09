@@ -47,21 +47,22 @@ public class UiBaseTest {
     DRIVER.get("https://www.saucedemo.com/");
   }
 
+  protected static WebElement findByDataTest(String dataTest) {
+    return DRIVER.findElement(By.cssSelector("[data-test='" + dataTest + "']"));
+  }
+
   protected static void inputPassword(String password) {
-    WebElement passwordElement =
-        DRIVER.findElement(By.cssSelector("[data-test='password']"));
+    WebElement passwordElement = findByDataTest("password");
     passwordElement.sendKeys(password);
   }
 
   protected static void login() {
-    WebElement login =
-        DRIVER.findElement(By.cssSelector("[data-test='login-button']"));
+    WebElement login = findByDataTest("login-button");
     login.click();
   }
 
   protected static void inputUsername(String username) {
-    WebElement usernameElement =
-        DRIVER.findElement(By.cssSelector("[data-test='username']"));
+    WebElement usernameElement = findByDataTest("username");
     usernameElement.sendKeys(username);
   }
 

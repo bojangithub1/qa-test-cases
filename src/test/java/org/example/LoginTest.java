@@ -5,13 +5,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 import java.util.stream.Stream;
 
 public class LoginTest extends UiBaseTest {
 
-  private static Stream<Arguments> testLoginWithUsernameAndPasswordInputs() {
+  private static Stream<Arguments> loginWithUsernameAndPasswordInputs() {
     return Stream.of(
         Arguments.of("correct username - correct password", "standard_user",
             "secret_sauce", true),
@@ -25,7 +24,7 @@ public class LoginTest extends UiBaseTest {
   }
 
   @ParameterizedTest(name = "{0}")
-  @MethodSource("testLoginWithUsernameAndPasswordInputs")
+  @MethodSource("loginWithUsernameAndPasswordInputs")
   void testLoginWithUsernameAndPassword(String displayName, String username,
                                         String password, boolean result) {
     getIndex();
@@ -34,14 +33,13 @@ public class LoginTest extends UiBaseTest {
     inputPassword(password);
     login();
 
-    // TODO: Use smarter assertion
     Assertions.assertEquals(result,
         "https://www.saucedemo.com/inventory.html".equals(
             DRIVER.getCurrentUrl()));
   }
 
 
-  private static Stream<Arguments> testLoginWithMissingUsernameOrPasswordInputs() {
+  private static Stream<Arguments> loginWithMissingUsernameOrPasswordInputs() {
     return Stream.of(
         Arguments.of("missing username", "", "secret_sauce"),
         Arguments.of("missing password", "standard_user", "")
@@ -49,7 +47,7 @@ public class LoginTest extends UiBaseTest {
   }
 
   @ParameterizedTest(name = "{0}")
-  @MethodSource("testLoginWithMissingUsernameOrPasswordInputs")
+  @MethodSource("loginWithMissingUsernameOrPasswordInputs")
   void testLoginWithMissingUsernameOrPassword(String displayName,
                                               String username,
                                               String password) {
@@ -63,24 +61,6 @@ public class LoginTest extends UiBaseTest {
     Assertions.assertTrue(
         DRIVER.findElement(By.cssSelector("[data-test='error']"))
             .isDisplayed());
-  }
-
-  private static void inputPassword(String password) {
-    WebElement passwordElement =
-        DRIVER.findElement(By.cssSelector("[data-test='password']"));
-    passwordElement.sendKeys(password);
-  }
-
-  private static void login() {
-    WebElement login =
-        DRIVER.findElement(By.cssSelector("[data-test='login-button']"));
-    login.click();
-  }
-
-  private static void inputUsername(String username) {
-    WebElement usernameElement =
-        DRIVER.findElement(By.cssSelector("[data-test='username']"));
-    usernameElement.sendKeys(username);
   }
 
 }

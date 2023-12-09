@@ -49,16 +49,18 @@ public class LoginTest extends UiBaseTest {
 
   private static Stream<Arguments> loginWithMissingUsernameOrPasswordInputs() {
     return Stream.of(
-        Arguments.of("missing username", "", "secret_sauce"),
-        Arguments.of("missing password", "standard_user", "")
+        Arguments.of("missing username", "", "secret_sauce",
+            "Epic sadface: Username is required"),
+        Arguments.of("missing password", "standard_user", "",
+            "Epic sadface: Password is required")
     );
   }
 
   @ParameterizedTest(name = "{0}")
   @MethodSource("loginWithMissingUsernameOrPasswordInputs")
   void testLoginWithMissingUsernameOrPassword(String displayName,
-                                              String username,
-                                              String password) {
+                                              String username, String password,
+                                              String errorResponse) {
     getIndex();
 
     inputUsername(username);
@@ -66,7 +68,7 @@ public class LoginTest extends UiBaseTest {
 
     login();
 
-    Assertions.assertTrue(findByDataTest("error").isDisplayed());
+    Assertions.assertEquals(errorResponse, findByDataTest("error").getText());
   }
 
 }

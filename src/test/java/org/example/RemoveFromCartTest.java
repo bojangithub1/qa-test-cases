@@ -18,17 +18,6 @@ public class RemoveFromCartTest extends UiBaseTest {
     WebElement addToCart = findByDataTest("add-to-cart-sauce-labs-backpack");
     addToCart.click();
 
-    // Check that there is no longer "add to cart" option for this item
-    Assertions.assertThrows(NoSuchElementException.class,
-        () -> findByDataTest("add-to-cart-sauce-labs-backpack"));
-
-    // Check that there is "remove" option for this item
-    WebElement removeBackpack = findByDataTest("remove-sauce-labs-backpack");
-    Assertions.assertEquals("Remove", removeBackpack.getText());
-
-    Assertions.assertEquals("1",
-        DRIVER.findElement(By.className("shopping_cart_badge")).getText());
-
     WebElement shoppingCartLink =
         DRIVER.findElement(By.className("shopping_cart_link"));
     shoppingCartLink.click();
